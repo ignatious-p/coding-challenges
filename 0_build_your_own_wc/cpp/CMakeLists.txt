@@ -36,32 +36,6 @@ enable_testing()
 # Add tests directory
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
-# Configure clang-format
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-find_program(CLANG_FORMAT "clang-format")
-if(CLANG_FORMAT)
-  add_custom_target(
-    format
-    COMMAND ${CLANG_FORMAT}
-    -i
-    -style=file
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp
-  )
-endif()
-
-# Configure clang-tidy
-find_program(CLANG_TIDY "clang-tidy")
-if(CLANG_TIDY)
-  set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
-endif()
-
-
-# # Set the C++ standard
-# target_compile_features(hw4 PRIVATE cxx_std_20)
-
-# # Add the required compile flags
 
 # # Additionsal flags to enable address sanitizer and ub sanitizers
 # target_compile_options(ccwc PRIVATE -fdiagnostics-color=always -fsanitize=address -fsanitize=undefined,unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)

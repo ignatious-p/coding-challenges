@@ -36,26 +36,6 @@ enable_testing()
 # Add tests directory
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
-# Configure clang-format
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-find_program(CLANG_FORMAT "clang-format")
-if(CLANG_FORMAT)
-  add_custom_target(
-    format
-    COMMAND ${CLANG_FORMAT}
-    -i
-    -style=file
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.c
-  )
-endif()
-
-# Configure clang-tidy
-find_program(CLANG_TIDY "clang-tidy")
-if(CLANG_TIDY)
-  set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
-endif()
 
 # # Add the required compile flags
 # # Link the api library
