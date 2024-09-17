@@ -1,0 +1,62 @@
+cmake_minimum_required(VERSION 3.11..3.29)
+project(cccat
+        LANGUAGES C)
+
+
+# Only do these if this is the main project, and not if it is included through add_subdirectory
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Enables output of compile commands for debug purposes
+    set(CMAKE_C_EXTENSIONS OFF) # disable gnu extensions
+
+endif()
+
+# Set C standard (c23)
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+add_executable(cccat src/cccat.c)
+target_compile_options(cccat PRIVATE -Wall -Wextra -Werror -O3 -g -fdiagnostics-color=always -fanalyzer -fuse-ld=mold)
+target_compile_options(cccat PRIVATE -fsanitize=address -fsanitize=undefined,unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
+
+
+# Add src directory
+target_sources(cccat PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+# Add include directory
+target_include_directories(cccat PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Create library header (in addition to the executable)
+add_library(cccat_lib INTERFACE)
+target_include_directories(cccat_lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Enable testing
+enable_testing()
+
+# Add tests directory
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+
+# Configure clang-format
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+find_program(CLANG_FORMAT "clang-format")
+if(CLANG_FORMAT)
+  add_custom_target(
+    format
+    COMMAND ${CLANG_FORMAT}
+    -i
+    -style=file
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.c
+  )
+endif()
+
+# Configure clang-tidy
+find_program(CLANG_TIDY "clang-tidy")
+if(CLANG_TIDY)
+  set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
+endif()
+
+# # Add the required compile flags
+# # Link the api library
+target_link_options(cccat PRIVATE -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
