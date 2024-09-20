@@ -5,7 +5,7 @@ add_executable(${TEST_BINARY}
 
 target_compile_options(${TEST_BINARY} PRIVATE -Wall -Wextra -Werror -O3 -g -fdiagnostics-color=always -fuse-ld=mold)
 target_compile_features(${TEST_BINARY} PRIVATE c_std_23)
-
+target_compile_definitions(${TEST_BINARY} PRIVATE _XOPEN_SOURCE=700)
 
 target_link_libraries(${TEST_BINARY} PUBLIC lib_${PROJECT_NAME})
 
