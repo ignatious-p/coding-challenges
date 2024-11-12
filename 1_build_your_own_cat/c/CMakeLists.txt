@@ -22,7 +22,7 @@ add_executable(cccat src/cccat.c)
 # Add src directory to cccat
 target_sources(cccat PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_compile_options(cccat PRIVATE -Wall -Wextra -Werror -O3 -g -fdiagnostics-color=always -fanalyzer -fuse-ld=mold)
-# target_compile_options(cccat PRIVATE -fsanitize=address -fsanitize=undefined,unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
+target_compile_options(cccat PRIVATE -fsanitize=address -fsanitize=undefined,unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
 target_compile_definitions(cccat PRIVATE _XOPEN_SOURCE=700)
 
 
@@ -37,4 +37,4 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 # # Add the required compile flags
 # # Link the api library
-# target_link_options(cccat PRIVATE -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
+target_link_options(cccat PRIVATE -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)

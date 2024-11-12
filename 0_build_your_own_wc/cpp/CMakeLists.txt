@@ -11,8 +11,8 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
 endif()
 
-# Set C++ standard (c++23)
-set(CMAKE_CXX_STANDARD 23)
+# Set C++ standard (c++20)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(ccwc src/ccwc.cpp)

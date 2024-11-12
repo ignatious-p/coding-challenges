@@ -1,8 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
+    "folders": [
+        {
+            "path": "."
+        }
     ],
-    "settings": {}
+    "settings": {
+        "nrf-connect.topdir": "${nrf-connect.sdk:2.7.0}"
+    }
 }

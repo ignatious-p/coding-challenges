@@ -4,7 +4,7 @@ include(Catch)
 set(TEST_BINARY test_${PROJECT_NAME})
 enable_language(CXX)
 add_executable(${TEST_BINARY}
-               test_PrintFile.cpp
+               test_ccsh.cpp
             )
 
 target_compile_options(${TEST_BINARY} PRIVATE -Wall -Wextra -Werror -O3 -g -fdiagnostics-color=always -fuse-ld=mold)
@@ -15,4 +15,4 @@ target_link_libraries(${TEST_BINARY} PUBLIC lib_${PROJECT_NAME} Catch2::Catch2Wi
 catch_discover_tests(${TEST_BINARY})
 
 
-# target_link_options(${TEST_BINARY} PRIVATE -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
+target_link_options(${TEST_BINARY} PRIVATE -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fstack-protector -fno-sanitize-recover -fno-omit-frame-pointer)
